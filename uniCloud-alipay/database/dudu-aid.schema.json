@@ -1,0 +1,1 @@
+{"code":"string","create_at":"number","update_at":"number","deviceId":"string","app_data_store":"object","bsonType":"object","phone":"string","required":[],"permission":{"read":false,"create":false,"update":false,"delete":false},"properties":{"_id":{"description":"ID，系统自动生成"}}}

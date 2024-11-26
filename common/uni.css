@@ -1,0 +1,84 @@
+uni-app, uni-page, uni-page-wrapper, uni-page-body{
+	height: 100%;
+}
+page {
+  overflow: hidden;
+  height: 100%;
+}
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.flex-view {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.main-view {
+	height: 100vh;
+} 
+.main-content {
+	display: flex;
+	flex:1;
+	height: 0;
+	position: relative;
+	transition: all 0.4s;
+}
+.main-content .content-view {
+	position: absolute;
+	left:0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+}
+.main-content .content-view:nth-child(2) {
+	left: 100%;
+}
+.main-content .content-view:nth-child(3) {
+	left: 200%;
+}
+.main-content .content-view:nth-child(4) {
+	left: 300%;
+}
+.is-zoom {
+	transform: scale(1.2);
+	transition: transform 0.3s;
+}
+.is-hover {
+	opacity: 0.6;
+}
+.custom-header {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	flex:1;
+	padding: 0px 10px;
+	box-sizing: border-box;
+}
+.custom-header .header-title {
+	flex: 1;
+	text-align: center;
+}
+.icon {
+	width: 18px;
+	height: 18px;
+}
+.pre-like-view {
+  white-space: pre-wrap; /* 保留空白符和换行符，同时允许文本自动换行 */
+}
+.scroll-main-vew {
+	flex: 1;
+	height: 0;
+}
+.scroll-main-content {
+	padding: 10px;
+}

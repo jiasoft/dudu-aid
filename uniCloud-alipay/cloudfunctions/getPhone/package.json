@@ -1,0 +1,15 @@
+{
+    "name": "savePhone",
+    "dependencies": [],
+    "extensions": {
+        "uni-cloud-jql": [],
+        "uni-cloud-verify": []
+    },
+    "cloudfunction-config": {
+        "memorySize": 512,
+        "timeout": 60,
+        "triggers": [],
+        "path": "/getPhone",
+        "runtime": "Nodejs18"
+    }
+}
