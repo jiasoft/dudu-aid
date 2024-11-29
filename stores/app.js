@@ -83,8 +83,26 @@ export const useAppStore = defineStore('appStore', {
 				code,
 				create_at,
 				phone,
-				app_data_store
+				layoutActive,
+				sessionId,
+				dataList,
+				calendarEvents,
+				noteList
 			} = this
+			const app_data_store =  {
+				layoutActive,
+				sessionId,
+				dataList,
+				calendarEvents,
+				noteList
+			}
+			app_data_store.dataList.forEach(item => {
+				item.answers?.forEach(ans => {
+					delete ans.writeing
+					delete ans.writeingAnswer
+				})
+				
+			})
 			if (!id) return
 			const update_at = new Date().getTime()
 			const {
@@ -159,7 +177,7 @@ export const useAppStore = defineStore('appStore', {
 					scrollTop.value = 100000 - 0.1
 					requestAnimationFrame(() => {
 						scrollTop.value = 100000
-					})
+					}, 100)
 				} else {
 					answerItem.writeing = false
 					answerItem.writeingAnswer = ''

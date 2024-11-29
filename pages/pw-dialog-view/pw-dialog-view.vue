@@ -23,6 +23,7 @@
 						<view class="content-serve">
 							<view v-for="(answerItem,i) in item.answers" :key="i">
 								<view class="answer pre-like-view" v-if="answerItem.answer">
+								
 									<text>{{answerItem.writeingAnswer || answerItem.answer}}<template v-if="answerItem.writeing" >|</template></text>
 									<view class="tl-loading-data-view" v-if="answerItem.loading">
 										<tl-loading-data></tl-loading-data>
