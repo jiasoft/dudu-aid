@@ -23,8 +23,8 @@
 						<view class="content-serve">
 							<view v-for="(answerItem,i) in item.answers" :key="i">
 								<view class="answer pre-like-view" v-if="answerItem.answer">
-								
-									<text>{{answerItem.writeingAnswer || answerItem.answer}}<template v-if="answerItem.writeing" >|</template></text>
+									<text v-if="answerItem.writeing" >{{answerItem.writeingAnswer}}<template >|</template></text>
+									<text v-else>{{answerItem.answer}}</text>
 									<view class="tl-loading-data-view" v-if="answerItem.loading">
 										<tl-loading-data></tl-loading-data>
 									</view>
@@ -104,9 +104,11 @@
 		if(!appStore.sessionId) {
 			const { conversation_id } = await createBdAiSessionId()
 			appStore.setSessionId(conversation_id)
-		}console.log(askCtx.value)
-		const { answer, conversation_id,is_completion, date } = await askContent(askCtx.value, appStore.sessionId)
-		askCtx.value = ''
+		}
+		const askValue = askCtx.value
+		 askCtx.value = ''
+		const { answer, conversation_id,is_completion, date } = await askContent(askValue, appStore.sessionId)
+		
 		if(!conversation_id && conversation_id !== appStore.sessionId) {
 			
 			data.answers[0].loading = false

@@ -163,6 +163,7 @@ export const useAppStore = defineStore('appStore', {
 			const index = this.getDataListLastIndex()
 			const answers = this.dataList[index].answers
 			const answerItem = answers[answers.length - 1]
+			answerItem.writeing = true
 			answerItem.answer = word
 			this.saveAppDataStore()
 			const _this = this
@@ -172,8 +173,8 @@ export const useAppStore = defineStore('appStore', {
 				if (i <= word.length) {
 					// console.log(word.substr(0, i))
 					answerItem.writeingAnswer = word.substr(0, i)
-					answerItem.writeing = true
-					setTimeout(setWord, 100)
+					
+					setTimeout(setWord, 60)
 					scrollTop.value = 100000 - 0.1
 					requestAnimationFrame(() => {
 						scrollTop.value = 100000
