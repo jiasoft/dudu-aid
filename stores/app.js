@@ -25,6 +25,7 @@ export const useAppStore = defineStore('appStore', {
 		const layoutActive = app_data_store.layoutActive
 		const calendarEvents = app_data_store.calendarEvents || []
 		const noteList = app_data_store.noteList || []
+		
 		return {
 			id,
 			deviceId,
@@ -42,17 +43,18 @@ export const useAppStore = defineStore('appStore', {
 	},
 	actions: {
 		setAppDataStore(data) {
+			const app_data_store = data.app_data_store || {}
 			this.phone = data.phone
 			this.id = data.id || data._id
 			this.deviceId = data.deviceId
 			this.code = data.code
 			this.create_at = data.create_at
 			this.update_at = data.update_at
-			this.layoutActive = data.app_data_store?.layoutActive || 0
-			this.sessionId = data.app_data_store?.sessionId || ''
-			this.dataList = data.app_data_store?.dataList || []
-			this.calendarEvents = data.app_data_store?.calendarEvents || []
-			this.noteList = data.app_data_store?.noteList || []
+			this.layoutActive = app_data_store.layoutActive || 0
+			this.sessionId = app_data_store.sessionId || ''
+			this.dataList = app_data_store.dataList || []
+			this.calendarEvents = data.app_data_store.calendarEvents || []
+			this.noteList = app_data_store.noteList || []
 		},
 		saveAppDataStore() {
 			const appDataStore = uni.getStorageSync(StoreName) || {
@@ -97,7 +99,7 @@ export const useAppStore = defineStore('appStore', {
 				noteList
 			}
 			app_data_store.dataList.forEach(item => {
-				item.answers?.forEach(ans => {
+				item.answers && item.answers.forEach(ans => {
 					delete ans.writeing
 					delete ans.writeingAnswer
 				})
@@ -160,31 +162,36 @@ export const useAppStore = defineStore('appStore', {
 			this.saveAppDataStore()
 		},
 		setLastDataItemWord(word, scrollTop, callback) {
-			const index = this.getDataListLastIndex()
-			const answers = this.dataList[index].answers
-			const answerItem = answers[answers.length - 1]
-			answerItem.writeing = true
-			answerItem.answer = word
-			this.saveAppDataStore()
-			const _this = this
-			let i = 0;
-			(function setWord() {
-				i++
-				if (i <= word.length) {
-					// console.log(word.substr(0, i))
-					answerItem.writeingAnswer = word.substr(0, i)
-					
-					setTimeout(setWord, 60)
-					scrollTop.value = 100000 - 0.1
-					requestAnimationFrame(() => {
-						scrollTop.value = 100000
-					}, 100)
-				} else {
-					answerItem.writeing = false
-					answerItem.writeingAnswer = ''
-
-				}
-			})()
+			return new Promise(resolve => {
+				const index = this.getDataListLastIndex()
+				const answers = this.dataList[index].answers
+				const answerItem = answers[answers.length - 1]
+				answerItem.answer = word
+				this.saveAppDataStore()
+				this.updateDatabaseDataSet()
+				answerItem.writeing = true
+				const _this = this
+				let i = 0;
+				(function setWord() {
+					i++
+					if (i <= word.length) {
+						// console.log(word.substr(0, i))
+						answerItem.writeingAnswer = word.substr(0, i)
+						
+						setTimeout(setWord, 60)
+						scrollTop.value = 100000 - 0.1
+						requestAnimationFrame(() => {
+							scrollTop.value = 100000
+						}, 100)
+					} else {
+						delete answerItem.writeing
+						delete answerItem.writeingAnswer
+						
+						resolve()
+					}
+				})()
+			})
+			
 			// setWord()
 		},
 		addCalendarEvent(item) {

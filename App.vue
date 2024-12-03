@@ -10,10 +10,8 @@
 		onLaunch: async function() {
 			
 			if(!this.appStoreStore.id){
-				
-				
 				const info = uni.getSystemInfoSync()
-				console.log(info)
+				// console.log(info)
 				const {data} = await getDataSetByDeviceId(info.deviceId)
 				if(data[0]) {
 					this.appStoreStore.setAppDataStore(data[0])

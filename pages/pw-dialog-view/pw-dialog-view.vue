@@ -107,6 +107,10 @@
 		}
 		const askValue = askCtx.value
 		 askCtx.value = ''
+		 scrollTop.value = 100000 - 0.1
+		 requestAnimationFrame(() => {
+		 	scrollTop.value = 100000
+		 }, 100)
 		const { answer, conversation_id,is_completion, date } = await askContent(askValue, appStore.sessionId)
 		
 		if(!conversation_id && conversation_id !== appStore.sessionId) {
@@ -124,7 +128,8 @@
 		}]
 		appStore.setLastDataItem(data)
 		appStore.setLastDataItemWord(answer, scrollTop)
-		appStore.updateDatabaseDataSet()
+		
+		
 	}
 	const onClick = () => {
 		onConfirm()
