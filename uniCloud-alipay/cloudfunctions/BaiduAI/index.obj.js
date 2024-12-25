@@ -37,7 +37,6 @@ function createSession() {
 		app_id
 	});
 	const headers = getHeaders(body.length)
-
 	return fetch(
 			`${host}/v2/app/conversation`, {
 				method: "post",
@@ -45,14 +44,12 @@ function createSession() {
 				body: body,
 			})
 		.then((response) => {
-			
 			if (response.status === 200 && response.ok)
 				return response.json();
 			else
 				return response.text();
 		})
 		.then((data) => {
-			// console.log(data)
 			return data;
 		})
 		.catch((err) => {
@@ -62,7 +59,6 @@ function createSession() {
 }
 
 function askContent(query, conversation_id) {
-	
 	const body = JSON.stringify({
 		app_id,
 		query,
@@ -84,7 +80,7 @@ function askContent(query, conversation_id) {
 
 		})
 		.then((data) => {
-			
+			console.log(data)
 			return data;
 		})
 		.catch((err) => {

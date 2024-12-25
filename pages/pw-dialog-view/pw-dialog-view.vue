@@ -100,19 +100,21 @@
 			]
 		}
 		appStore.addDataItem(data)
-		
 		if(!appStore.sessionId) {
+			
 			const { conversation_id } = await createBdAiSessionId()
 			appStore.setSessionId(conversation_id)
 		}
+
 		const askValue = askCtx.value
 		 askCtx.value = ''
-		 scrollTop.value = 100000 - 0.1
-		 requestAnimationFrame(() => {
+		 scrollTop.value = 100000 - 1
+	
+		 setTimeout(() => {
 		 	scrollTop.value = 100000
-		 }, 100)
+		 }, 300)
+
 		const { answer, conversation_id,is_completion, date } = await askContent(askValue, appStore.sessionId)
-		
 		if(!conversation_id && conversation_id !== appStore.sessionId) {
 			
 			data.answers[0].loading = false

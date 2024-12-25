@@ -180,7 +180,7 @@ export const useAppStore = defineStore('appStore', {
 						
 						setTimeout(setWord, 60)
 						scrollTop.value = 100000 - 0.1
-						requestAnimationFrame(() => {
+						setTimeout(() => {
 							scrollTop.value = 100000
 						}, 100)
 					} else {
